@@ -20,7 +20,7 @@ export default function ProjectModal({ p, d, lang, onClose }: Props) {
       <div className="modal__box" onClick={(e) => e.stopPropagation()}>
         <button className="modal__close" onClick={onClose} aria-label={d.close}>✕</button>
         <div className="modal__cover" style={{ background: p.color }}>
-          {p.image ? <img src={p.image} alt={p.title} /> : <span>{p.emoji}</span>}
+          <img src={p.image} alt={p.title} width={256} height={256} />
         </div>
         <div className="modal__body">
           <h3>{p.title}</h3>
@@ -33,7 +33,9 @@ export default function ProjectModal({ p, d, lang, onClose }: Props) {
             {p.tech.map((t) => <span key={t} className="tag">{t}</span>)}
           </div>
           <div className="card__links">
-            <a href={p.demo} target="_blank" rel="noreferrer" className="btn btn--primary">{d.demo} ↗</a>
+            {p.demo && (
+              <a href={p.demo} target="_blank" rel="noreferrer" className="btn btn--primary">{d.demo} ↗</a>
+            )}
             <a href={p.repo} target="_blank" rel="noreferrer" className="btn btn--ghost">{d.code}</a>
           </div>
         </div>

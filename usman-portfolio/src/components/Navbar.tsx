@@ -18,7 +18,8 @@ export default function Navbar({ d, lang, setLang, theme, toggleTheme }: Props) 
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
@@ -32,8 +33,14 @@ export default function Navbar({ d, lang, setLang, theme, toggleTheme }: Props) 
   return (
     <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
       <div className="container nav__inner">
-        <a href="#top" className="logo">
-          <span className="logo__mark">U</span>Usman<span className="accent">.dev</span>
+        <a href="#top" className="logo" aria-label="Usman.dev">
+          <span className="logo__mark">
+            <svg viewBox="0 0 32 32" width="22" height="22" fill="none" aria-hidden>
+              <path d="M11 10 5 16l6 6M21 10l6 6-6 6" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M18 7.5 14 24.5" stroke="#fff" strokeOpacity="0.75" strokeWidth="2.6" strokeLinecap="round" />
+            </svg>
+          </span>
+          <span>Usman<span className="accent">.dev</span></span>
         </a>
 
         <nav className={`nav__links ${open ? 'is-open' : ''}`}>
@@ -52,10 +59,15 @@ export default function Navbar({ d, lang, setLang, theme, toggleTheme }: Props) 
               </button>
             ))}
           </div>
-          <button className="icon-btn" onClick={toggleTheme} aria-label="theme">
+          <button className="icon-btn" onClick={toggleTheme} aria-label={d.theme}>
             {theme === 'dark' ? '☀️' : '🌙'}
           </button>
-          <button className={`burger ${open ? 'is-open' : ''}`} onClick={() => setOpen(!open)} aria-label="menu">
+          <button
+            className={`burger ${open ? 'is-open' : ''}`}
+            onClick={() => setOpen(!open)}
+            aria-label="menu"
+            aria-expanded={open}
+          >
             <span /><span /><span />
           </button>
         </div>
